@@ -1,0 +1,1 @@
+<p> Register was succesfull!</p>
