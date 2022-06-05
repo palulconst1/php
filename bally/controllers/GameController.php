@@ -45,6 +45,15 @@ class GameController
 
         ];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $g1 = $router->database->getTeamById($_POST["home_id"]);
+            $g2 = $router->database->getTeamById($_POST["away_id"]);
+
+            if($g1 == null || $g2 == null) {
+                header('Location: /games');
+                exit;
+            }
+
             $gameData['home_id'] = $_POST['home_id'];
             $gameData['away_id'] = $_POST['away_id'];
             $gameData['game_day'] = $_POST['game_day'];

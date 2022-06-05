@@ -40,6 +40,14 @@ class PlayerController
 
         ];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $p = $router->database->getTeamById($_POST["team_id"]);
+
+            if($p == null) {
+                header('Location: /players');
+                exit;
+            }
+
             $playerData['pname'] = $_POST['pname'];
             $playerData['team_id'] = $_POST['team_id'];
             $playerData['goals'] = $_POST['goals'];

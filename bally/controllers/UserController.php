@@ -18,7 +18,7 @@ class UserController
             $user = $router->database->getUserByUsername($_POST['username']);
 
             if($user) {
-                header('Location: /user/register_fail');
+                header('Location: /register_fail');
                 exit;
             }
             
@@ -70,9 +70,9 @@ class UserController
 
             $user = new User();
             $user->load($userData);
-            $users = $router->database->validateUser($user->username,sha1($user->password));
+            $logged = $router->database->validateUser($user->username,sha1($user->password));
 
-            if($users) {
+            if($logged) {
                 session_start();
                 $_SESSION['valid_user'] = array("username"=>$user->username,"role"=>$user->role);
 
@@ -80,7 +80,7 @@ class UserController
             }
             else
             {
-                var_dump($users);
+                var_dump($logged);
                 header('Location: /user/login');
             }
 

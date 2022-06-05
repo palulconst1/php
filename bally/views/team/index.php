@@ -22,7 +22,7 @@
         </div>
     </form>
     <div style="margin-right:100px">
-        <table class="table table-bordered  table-responsive-md btn-table">
+        <table class="table  table-responsive-md btn-table">
             <thead>
                 <tr>
                     <th scope="col">Nr</th>
