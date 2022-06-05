@@ -7,18 +7,19 @@ unset($_SESSION['valid_user']);
 session_destroy();
 ?>
 <html>
+
 <body>
 
-<?php
-if (!empty($old_user))
-{
-    echo 'Logged out.<br />';
-}
-else
-{
-    echo 'You were not logged in! <br />';
-}
-?>
+    <?php
+    if (!empty($old_user)) {
+        header('Location: /teams');
+        exit;
+    } else {
+        header('Location: /teams');
+        exit;
+    }
+    ?>
 
 </body>
+
 </html>

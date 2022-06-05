@@ -1,1 +1,1 @@
-<p> Authentification was succesfull!</p>
+<h3  style="margin-left: 50px;">Authentification was succesfull!</h3>

@@ -7,7 +7,6 @@ use app\models\Game;
 use app\models\Player;
 use app\models\User;
 use PDO;
-require 'Global.php';
 
 # Prevenire atacuri : Pentru a preveni SQL Injection am folosit PDO ( statementuri cu prepare , parserul nu interpreteaza DOAR data )
 
@@ -218,13 +217,10 @@ class Database
 
     public function validateUser($username = '', $password ='')
     {
-
-
         if ($username) {
             $statement = $this->pdo->prepare('SELECT * FROM users WHERE username like :username AND password like :password ORDER BY id ASC');
             $statement->bindValue(":username", "%$username%");
             $statement->bindValue(":password", "%$password%");
-
 
         } else {
             return null;
@@ -238,6 +234,14 @@ class Database
     {
         $statement = $this->pdo->prepare('SELECT * FROM users WHERE id = :id');
         $statement->bindValue(':id', $id);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserByUsername($username)
+    {
+        $statement = $this->pdo->prepare('SELECT role FROM users WHERE username = :username');
+        $statement->bindValue(':username', $username);
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }

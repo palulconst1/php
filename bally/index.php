@@ -5,6 +5,7 @@ use app\controllers\GameController;
 use app\controllers\PlayerController;
 use app\controllers\UserController;
 use app\controllers\MailController;
+use app\controllers\TopTeamController;
 use app\Router;
 use app\Database;
 
@@ -41,6 +42,7 @@ $router->get('/user/create', [UserController::class, 'create']);
 $router->post('/user/create', [UserController::class, 'create']);
 
 $router->get('/register_success', [UserController::class, 'register_success']);
+$router->get('/register_fail', [UserController::class, 'register_fail']);
 
 $router->get('/user/login', [UserController::class, 'login_user']);
 $router->post('/user/login', [UserController::class, 'login_user']);
@@ -49,6 +51,8 @@ $router->get('/login_success', [UserController::class, 'login_success']);
 
 $router->get('/mail', [MailController::class, 'mail_contact']);
 $router->post('/mail', [MailController::class, 'mail_contact']);
+
+$router->get('/topTeams', [TopTeamController::class, 'topTeam']);
 
 $router->resolve();
 

@@ -8,15 +8,23 @@ use app\Router;
 
 class UserController
 {
-    public function create(Router $router)
+    public static function create(Router $router)
     {
         $userData = [
 
         ];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $user = $router->database->getUserByUsername($_POST['username']);
+
+            if($user) {
+                header('Location: /user/register_fail');
+                exit;
+            }
+            
             $userData['username'] = $_POST['username'];
             $userData['password'] = sha1($_POST['password']);
-            $userData['role'] = $_POST['role'];
+            $userData['role'] = 1;
 
             $user = new User();
             $user->load($userData);
@@ -29,22 +37,36 @@ class UserController
         ]);
     }
 
-    public function register_success(Router $router)
+    public static function register_success(Router $router)
     {
         $router->renderView('user/register_success', [
         ]);
     }
 
-    public function login_user(Router $router)
+    public static function register_fail(Router $router)
+    {
+        $router->renderView('user/register_fail', [
+        ]);
+    }
+
+    public static function login_user(Router $router)
     {
 
         $userData = [
 
         ];
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $role = $router->database->getUserByUsername($_POST['username']);
+
+            if(!$role) {
+                header('Location: /user/login');
+                exit;
+            }
+
             $userData['username'] = $_POST['username'];
             $userData['password'] = $_POST['password'];
-            $userData['role'] = $_POST['role'];
+            $userData['role'] = $role['role'];
 
             $user = new User();
             $user->load($userData);
@@ -52,7 +74,7 @@ class UserController
 
             if($users) {
                 session_start();
-                $_SESSION['valid_user'] = array("username"=>$user->username,"role"=>$users[0]->role);
+                $_SESSION['valid_user'] = array("username"=>$user->username,"role"=>$user->role);
 
                 header('Location: /login_success');
             }
@@ -62,7 +84,7 @@ class UserController
                 header('Location: /user/login');
             }
 
-            header('Location: /register_success');
+            header('Location: /login_success');
             exit;
         }
         $router->renderView('user/login', [
@@ -72,7 +94,7 @@ class UserController
 
     }
 
-    public function login_success(Router $router)
+    public static function login_success(Router $router)
     {
         $router->renderView('user/login_success', [
         ]);

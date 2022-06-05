@@ -20,7 +20,7 @@
 
                     $old_user = $_SESSION['valid_user'];
 
-                    #echo  $old_user['username'];
+                    echo '<h3>' . $old_user["username"] . '</h3>';
                     echo '<a href="/views/user/logout.php">Log out</a><br />';
                 }
 
